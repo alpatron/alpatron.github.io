@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        img{
+            display: none;
+        }
+        canvas, audio{
+            display:block;
+            margin:auto;
+        }
+        body{
+            background-color: rgb(145,139,129);
+        }
+        </style>
+    </head>
+    <body>
+        <img src="1.png" id="l1">
+        <img src="2.png" id="l2">
+        <img src="3.png" id="l3">
+        <img src="4.png" id="l4">
+        <img src="5.png" id="l5">
+        <img src="6.png" id="l6">
+        <img src="7.png" id="l7">
+        <img src="8.png" id="l8">
+        <img src="ozen.png" id="ozen">
+        <img src="base.png" id="base">
+        <canvas id="myCanvas" width="1139" height="1142"></canvas>
+        <audio controls autoplay loop>
+            <source src="song.ogg" type="audio/ogg">
+            <source src="song.m4a" type="audio/aac">
+          Your browser does not support the audio element.
+          </audio> 
+    <script>
+        ctx = document.getElementById("myCanvas").getContext("2d");
+        renderableObjects = [];
+        function ran(min,max){
+            return Math.floor(Math.random()*(max-min+1)+min);
+        }
+        function renderable(id,x,y,minx,maxx,miny,maxy,flipx,flipy){
+            this.image = document.getElementById(id);
+            this.x = x;
+            this.y = y;
+            this.minx = minx;
+            this.miny = miny;
+            this.maxx = maxx;
+            this.maxy = maxy;
+            this.flipx = flipx;
+            this.flipy = flipy;
+            this.render = function(ctx){
+                ctx.drawImage(this.image,x+ran(this.minx,this.maxx),y+ran(this.miny,this.maxy));
+            }
+        }
+        function draw(){
+            for(var i = 0;i<renderableObjects.length;i++)
+                renderableObjects[i].render(ctx);
+        }
+        function init(){
+            renderableObjects.push(new renderable("base",0,0,0,0,0,0,false,false));
+            renderableObjects.push(new renderable("l1",0,217,-15,0,-15,15,false,false));
+            renderableObjects.push(new renderable("l2",311,555,0,15,-2,2,false,false));
+            renderableObjects.push(new renderable("l3",321,24,-15,15,0,15,false,false));
+            renderableObjects.push(new renderable("l4",562,416,-15,0,-15,15,false,false));
+            renderableObjects.push(new renderable("l5",704,0,0,15,-15,0,false,false));
+            renderableObjects.push(new renderable("l6",803,783,0,15,0,15,false,false));
+            renderableObjects.push(new renderable("l7",0,641,-15,0,0,15,false,false));
+            renderableObjects.push(new renderable("l8",18,0,-15,15,-15,0,false,false));
+            renderableObjects.push(new renderable("ozen",273,213,0,0,0,0,false,false));
+        }
+        init();
+        interval = setInterval(draw,100);
+    </script>
+    </body>
+</html>
